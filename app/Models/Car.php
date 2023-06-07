@@ -8,16 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\CarTypeTrait;
 use App\Traits\Price;
 use App\Traits\Usage;
-use App\Enums\CarType;
 use App\Models\Brand;
 
 class Car extends Model
 {
 	use HasFactory, CarTypeTrait, Price, Usage;
 
-	protected $casts = [
-		'type' => CarType::class,
+	protected $hidden = [
+		'id',
+		'brand_id',
+		'created_at',
+		'updated_at',
 	];
+
+	protected $appends = [
+		'brand'
+	];
+
+	public function getBrandAttribute()
+	{
+		return $this->brand()->first();
+	}
 
 	public function brand()
 	{
