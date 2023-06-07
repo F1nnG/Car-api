@@ -21,5 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 	return $request->user();
 });
 
-Route::get('/car', [CarController::class, 'show']);
-Route::get('/brand', [BrandController::class, 'show']);
+Route::middleware('throttle:100,1')->group(function () {
+	Route::get('/car', [CarController::class, 'show']);
+	Route::get('/brand', [BrandController::class, 'show']);
+});
