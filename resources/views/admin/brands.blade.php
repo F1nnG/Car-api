@@ -84,7 +84,7 @@
 					</tbody>
 				</table>
 			</div>
-			{{ $brands->onEachSide(3)->links('components.admin.brands-pagination') }}
+			{{ $brands->onEachSide(3)->links('components.admin.pagination', ['type' => 'brands']) }}
 		</div>
 	</div>
 

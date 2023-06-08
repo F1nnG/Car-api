@@ -89,7 +89,7 @@
 					</tbody>
 				</table>
 			</div>
-			{{ $cars->onEachSide(3)->links('components.admin.cars-pagination') }}
+			{{ $cars->onEachSide(3)->links('components.admin.pagination', ['type' => 'cars']) }}
 		</div>
 	</div>
 
