@@ -14,6 +14,14 @@ class Car extends Model
 {
 	use HasFactory, CarTypeTrait, Price, Usage;
 
+	protected $fillable = [
+		'brand_id',
+		'model',
+		'price',
+		'type',
+		'usage',
+	];
+
 	protected $hidden = [
 		'id',
 		'brand_id',
