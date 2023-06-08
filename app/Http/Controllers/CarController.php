@@ -3,16 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Services\SearchService;
 
 use App\Models\Car;
 use App\Models\Brand;
 use App\Enums\CarType;
 
-class AdminController extends Controller
+class CarController extends Controller
 {
-	public function index(Request $request)
+	private $SearchService;
+
+	public function __construct()
 	{
-		$query = $this->search($request);
+		$this->SearchService = new SearchService();
+	}
+
+	public function indexCars(Request $request)
+	{
+		$query = $this->SearchService->searchCars($request);
 
 		$cars = $query->paginate(10);
 
@@ -28,25 +36,7 @@ class AdminController extends Controller
 		]);
 	}
 
-	private function search(Request $request): \Illuminate\Database\Eloquent\Builder
-	{
-		$query = Car::query();
-
-		if ($request->has('search') && $request->search != '') {
-			if (gettype($request->search) == 'string') {
-				$query->orWhere('model', 'LIKE', "%$request->search%");
-				$query->orWhere('type', $request->search);
-				$query->orWhereHas('brand', fn ($query) => $query->where('name', 'LIKE', "%$request->search%"));
-			} else {
-				$query->orWhere('price', $request->search * 100);
-				$query->orWhere('usage', $request->search * 100);
-			}
-		}
-
-		return $query->orderBy('brand_id')->orderBy('model');
-	}
-
-	public function store(Request $request)
+	public function storeCar(Request $request)
 	{
 		Car::create([
 			'brand_id' => $request->brand,
@@ -59,7 +49,7 @@ class AdminController extends Controller
 		return redirect()->route('admin.cars');
 	}
 
-	public function update(Request $request, Car $car)
+	public function updateCar(Request $request, Car $car)
 	{
 		$car->update([
 			'brand_id' => $request->brand,
@@ -72,7 +62,7 @@ class AdminController extends Controller
 		return redirect()->route('admin.cars');
 	}
 
-	public function destroy(Car $car)
+	public function destroyCar(Car $car)
 	{
 		$car->delete();
 		return redirect()->route('admin.cars');

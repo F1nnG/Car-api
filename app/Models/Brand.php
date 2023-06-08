@@ -11,6 +11,12 @@ class Brand extends Model
 {
 	use HasFactory;
 
+	protected $fillable = [
+		'name',
+		'country',
+		'website',
+	];
+
 	protected $hidden = [
 		'id',
 		'created_at',

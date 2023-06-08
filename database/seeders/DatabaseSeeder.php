@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
 			])
 			->create();
 
-		Brand::factory(10)
+		Brand::factory(100)
 			->has(
 				Car::factory(10)
 			)->create();
