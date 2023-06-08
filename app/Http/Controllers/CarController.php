@@ -18,7 +18,7 @@ class CarController extends Controller
 		$this->SearchService = new SearchService();
 	}
 
-	public function indexCars(Request $request)
+	public function index(Request $request)
 	{
 		$query = $this->SearchService->searchCars($request);
 
@@ -36,7 +36,7 @@ class CarController extends Controller
 		]);
 	}
 
-	public function storeCar(Request $request)
+	public function store(Request $request)
 	{
 		Car::create([
 			'brand_id' => $request->brand,
@@ -49,7 +49,7 @@ class CarController extends Controller
 		return redirect()->route('admin.cars');
 	}
 
-	public function updateCar(Request $request, Car $car)
+	public function update(Request $request, Car $car)
 	{
 		$car->update([
 			'brand_id' => $request->brand,
@@ -62,7 +62,7 @@ class CarController extends Controller
 		return redirect()->route('admin.cars');
 	}
 
-	public function destroyCar(Car $car)
+	public function destroy(Car $car)
 	{
 		$car->delete();
 		return redirect()->route('admin.cars');

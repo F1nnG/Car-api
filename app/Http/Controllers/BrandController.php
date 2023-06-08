@@ -16,7 +16,7 @@ class BrandController extends Controller
 		$this->SearchService = new SearchService();
 	}
 
-	public function indexBrands(Request $request)
+	public function index(Request $request)
 	{
 		$query = $this->SearchService->searchBrands($request);
 
@@ -32,7 +32,7 @@ class BrandController extends Controller
 		]);
 	}
 
-	public function storeBrand(Request $request)
+	public function store(Request $request)
 	{
 		Brand::create([
 			'name' => $request->name,
@@ -43,7 +43,7 @@ class BrandController extends Controller
 		return redirect()->route('admin.brands');
 	}
 
-	public function updateBrand(Request $request, Brand $brand)
+	public function update(Request $request, Brand $brand)
 	{
 		$brand->update([
 			'name' => $request->name,
@@ -54,7 +54,7 @@ class BrandController extends Controller
 		return redirect()->route('admin.brands');
 	}
 
-	public function destroyBrand(Brand $brand)
+	public function destroy(Brand $brand)
 	{
 		$brand->delete();
 		return redirect()->route('admin.brands');
