@@ -21,9 +21,19 @@ class DatabaseSeeder extends Seeder
 
 		User::factory()
 			->state([
+				'is_admin' => true,
 				'name' => 'Admin',
 				'email' => 'admin@admin.com',
 				'password' => 'admin',
+			])
+			->create();
+
+		User::factory()
+			->state([
+				'is_admin' => false,
+				'name' => 'User',
+				'email' => 'user@user.com',
+				'password' => 'user',
 			])
 			->create();
 
