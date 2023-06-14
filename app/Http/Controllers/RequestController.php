@@ -2,16 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Http\Services\SearchService;
 
 use App\Models\UserRequest;
 
 class RequestController extends Controller
 {
-	public function index()
+	private $SearchService;
+
+	public function __construct()
 	{
-		$requests = UserRequest::orderByDesc('created_at')
-			->paginate(10);
+		$this->SearchService = new SearchService();
+	}
+
+	public function index(Request $request)
+	{
+		// $requests = UserRequest::orderByDesc('created_at')
+		// 	->paginate(10);
+
+		$query = $this->SearchService->searchRequests($request);
+
+		$requests = $query->paginate(10);
 
 		$currentTime = Carbon::now();
 		foreach ($requests as $request) {

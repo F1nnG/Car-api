@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Car;
 use App\Models\Brand;
+use App\Models\UserRequest;
 
 class SearchService
 {
@@ -39,5 +40,21 @@ class SearchService
 		}
 
 		return $query->orderBy('name');
+	}
+
+	public function searchRequests(Request $request): Builder
+	{
+		$query = UserRequest::query();
+
+		if ($request->has('search') && $request->search != '') {
+			$query->orWhere('ip', 'LIKE', "%$request->search%");
+			$query->orWhere('verb', 'LIKE', "%$request->search%");
+			$query->orWhere('path', 'LIKE', "%$request->search%");
+			$query->orWhere('status', $request->search);
+			$query->orWhere('duration', $request->search);
+			$query->orWhere('created_at', 'LIKE', "%$request->search%");
+		}
+
+		return $query->orderBy('created_at', 'desc');
 	}
 }
