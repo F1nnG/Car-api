@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Car;
+use App\Models\UserRequest;
 
 class CarController extends Controller
 {
@@ -13,6 +14,14 @@ class CarController extends Controller
 	{
 		$query = $this->getQuery($request);
 		$cars = $query->limit(10)->get();
+
+		UserRequest::create([
+			'ip' => $request->getClientIp(),
+			'verb' => $request->method(),
+			'path' => $request->path(),
+			'status' => 200,
+			'duration' => ((microtime(true) - $request->request_start_time) * 1000),
+		]);
 
 		return response()->json($cars);
 	}

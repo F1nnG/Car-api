@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Brand;
+use App\Models\UserRequest;
 
 class BrandController extends Controller
 {
@@ -13,6 +14,14 @@ class BrandController extends Controller
 	{
 		$query = $this->getQuery($request);
 		$brands = $query->limit(10)->get();
+
+		UserRequest::create([
+			'ip' => $request->getClientIp(),
+			'verb' => $request->method(),
+			'path' => $request->path(),
+			'status' => 200,
+			'duration' => ((microtime(true) - $request->request_start_time) * 1000),
+		]);
 
 		return response()->json($brands);
 	}

@@ -19,9 +19,6 @@ class RequestController extends Controller
 
 	public function index(Request $request)
 	{
-		// $requests = UserRequest::orderByDesc('created_at')
-		// 	->paginate(10);
-
 		$query = $this->SearchService->searchRequests($request);
 
 		$requests = $query->paginate(10);
