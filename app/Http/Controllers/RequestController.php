@@ -3,39 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
+
+use App\Models\UserRequest;
 
 class RequestController extends Controller
 {
 	public function index()
 	{
-		$requests = DB::table('telescope_entries')
-			->where('type', 'request')
-			->whereJsonContains('content->middleware', 'api')
-			->orderByDesc('created_at')
+		$requests = UserRequest::orderByDesc('created_at')
 			->paginate(10);
 
 		$currentTime = Carbon::now();
 		foreach ($requests as $request) {
-			$request->content = json_decode($request->content);
-			$request->statusColor = $this->getStatusColor($request->content->response_status);
-
-			$pastTime = Carbon::parse($request->created_at);
-			$diffSeconds = $currentTime->diffInSeconds($pastTime);
-			$diffMinutes = $currentTime->diffInMinutes($pastTime);
-			$diffHours = $currentTime->diffInHours($pastTime);
-
-			if ($diffSeconds < 60)
-				$request->timeAgo = $diffSeconds . 's ago';
-			elseif ($diffMinutes < 60)
-				$request->timeAgo = $diffMinutes . 'm ago';
-			elseif ($diffHours < 24)
-				$request->timeAgo = $diffHours . 'h ago';
-			else
-				$request->timeAgo = $pastTime->format('M j, Y g:i A');
+			$request->statusColor = $this->getStatusColor($request->status);
+			$request->timeAgo = $this->getTimeAgo($currentTime, $request->created_at);
 		}
-
-		
 
 		return view('admin.requests', [
 			'requests' => $requests,
@@ -54,5 +36,22 @@ class RequestController extends Controller
 			return 'text-red-100';
 		else
 			return 'text-gray-400';
+	}
+
+	private function getTimeAgo($currentTime, $created_at)
+	{
+		$pastTime = Carbon::parse($created_at);
+		$diffSeconds = $currentTime->diffInSeconds($pastTime);
+		$diffMinutes = $currentTime->diffInMinutes($pastTime);
+		$diffHours = $currentTime->diffInHours($pastTime);
+
+		if ($diffSeconds < 60)
+			return $diffSeconds . 's ago';
+		elseif ($diffMinutes < 60)
+			return $diffMinutes . 'm ago';
+		elseif ($diffHours < 24)
+			return $diffHours . 'h ago';
+		else
+			return $pastTime->format('M j, Y g:i A');
 	}
 }

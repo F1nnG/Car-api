@@ -20,7 +20,7 @@ class UserRequestFactory extends Factory
 			'ip' => $this->faker->ipv4,
 			'verb' => $this->faker->randomElement(['GET', 'POST', 'PUT', 'DELETE']),
 			'path' => $this->faker->url,
-			'status' => $this->faker->randomElement([200, 201, 400, 401, 403, 404, 500]),
+			'status' => $this->faker->randomElement([200, 201, 300, 301, 400, 401, 403, 404, 500]),
 			'duration' => $this->faker->numberBetween(1, 1000),
 		];
 	}

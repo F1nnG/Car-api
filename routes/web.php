@@ -7,7 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\BrandController;
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +23,9 @@ use GuzzleHttp\Psr7\Request;
 Route::get('/', function () {
 	return view('welcome');
 })->name('home');
+
+Route::get('/admin', fn () => redirect()->route('admin.requests'))
+	->name('admin');
 
 Route::get('/admin/requests', [RequestController::class, 'index'])
 	->name('admin.requests');

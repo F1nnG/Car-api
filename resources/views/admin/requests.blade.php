@@ -35,11 +35,11 @@
 					<tbody>
 						@foreach ($requests as $request)
 							<tr class="border-b border-gray-700">
-								<th scope="row" class="px-4 py-3 font-medium whitespace-nowrap text-white">{{ $request->content->ip_address }}</th>
-								<td class="px-4 py-3">{{ $request->content->method }}</td>
-								<td class="px-4 py-3">{{ $request->content->uri }}</td>
-								<td class="px-4 py-3 font-bold {{ $request->statusColor }}">{{ $request->content->response_status }}</td>
-								<td class="px-4 py-3">{{ $request->content->duration }}ms</td>
+								<th scope="row" class="px-4 py-3 font-medium whitespace-nowrap text-white">{{ $request->ip }}</th>
+								<td class="px-4 py-3">{{ $request->verb }}</td>
+								<td class="px-4 py-3">{{ $request->path }}</td>
+								<td class="px-4 py-3 font-bold {{ $request->statusColor }}">{{ $request->status }}</td>
+								<td class="px-4 py-3">{{ $request->duration }}ms</td>
 								<td class="px-4 py-3">{{ $request->timeAgo }}</td>
 							</tr>
 						@endforeach
