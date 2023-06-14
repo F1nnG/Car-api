@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 
 use App\Models\User;
+use App\Models\UserRequest;
 use App\Models\Brand;
 use App\Models\Car;
 
@@ -15,6 +16,9 @@ class DatabaseSeeder extends Seeder
 	 */
 	public function run(): void
 	{
+		UserRequest::factory(100)
+			->create();
+
 		User::factory()
 			->state([
 				'name' => 'Admin',
