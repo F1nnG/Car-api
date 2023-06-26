@@ -2,69 +2,85 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Http\Services\SearchService;
 
 use App\Models\Car;
 use App\Models\Brand;
-use App\Enums\CarType;
+use App\Enums\CarBody;
+use App\Enums\CarFuel;
+use App\Enums\CarTransmission;
+use App\Enums\CarDoors;
 
 class CarController extends Controller
 {
-	private $SearchService;
-
-	public function __construct()
+	public function index($query = null, $searchRequest = null)
 	{
-		$this->SearchService = new SearchService();
+		$user = Auth::user() ?? null;
+		$query = $query ?? Car::query();
+
+		return view('user.cars', [
+			'user' => $user,
+			'cars' => $query->paginate(12),
+			'brands' => Brand::all(),
+			'bodies' => CarBody::asSelectArray(),
+			'fuels' => CarFuel::asSelectArray(),
+			'transmissions' => CarTransmission::asSelectArray(),
+			'doors' => array_merge(['All' => 'all'], CarDoors::asSelectArray()),
+			'searchRequest' => $searchRequest ?? [],
+		]);
 	}
 
-	public function index(Request $request)
+	public function search(Request $request)
 	{
-		$query = $this->SearchService->searchCars($request);
+		$query = Car::query();
 
-		$cars = $query->paginate(10);
+		// Search by brand and model
+		if ($request->input('search')) {
+			$searchTerm = $request->input('search');
 
-		if (isset($request->edit)) {
-			$editCar = Car::find($request->edit);
+			$terms = explode(' ', $searchTerm);
+			$brand = $terms[0];
+			$model = isset($terms[1]) ? $terms[1] : '';
+
+			$query->where(function ($query) use ($brand, $model) {
+				$query->where('model', 'LIKE', "%$model%")
+					->whereHas('brand', function ($query) use ($brand) {
+						$query->where('name', 'LIKE', "%$brand%");
+					});
+			});
+
+			$query->orWhere('model', 'LIKE', "%$searchTerm%");
 		}
 
-		return view('admin.cars', [
-			'cars' => $cars,
-			'brands' => Brand::orderBy('name')->get(),
-			'carTypes' => CarType::getValues(),
-			'editCar' => $editCar ?? null,
-		]);
-	}
+		// Search by filters
+		if ($request->input('brand'))
+			$query->where('brand_id', $request->input('brand'));
+		if ($request->input('body'))
+			$query->where('body', $request->input('body'));
+		if ($request->input('fuel'))
+			$query->where('fuel', $request->input('fuel'));
+		if ($request->input('construction_year_from'))
+			$query->where('construction_year', '>=', $request->input('construction_year_from'));
+		if ($request->input('construction_year_to'))
+			$query->where('construction_year', '<=', $request->input('construction_year_to'));
+		if ($request->input('price_from'))
+			$query->where('price', '>=', $request->input('price_from') * 100);
+		if ($request->input('price_to'))
+			$query->where('price', '<=', $request->input('price_to') * 100);
+		if ($request->input('power_from'))
+			$query->where($request->input('power'), '>=', $request->input('power_from'));
+		if ($request->input('power_to'))
+			$query->where($request->input('power'), '<=', $request->input('power_to'));
+		if ($request->input('transmission'))
+			$query->where('transmission', $request->input('transmission'));
+		if ($request->input('doors') != 'all')
+			$query->where('doors', CarDoors::fromKey($request->input('doors')));
+		if ($request->input('seats_from'))
+			$query->where('seats', '>=', $request->input('seats_from'));
+		if ($request->input('seats_to'))
+			$query->where('seats', '<=', $request->input('seats_to'));
 
-	public function store(Request $request)
-	{
-		Car::create([
-			'brand_id' => $request->brand,
-			'model' => $request->model,
-			'price' => $request->price,
-			'type' => CarType::fromValue($request->type),
-			'usage' => $request->usage,
-		]);
-
-		return redirect()->route('admin.cars');
-	}
-
-	public function update(Request $request, Car $car)
-	{
-		$car->update([
-			'brand_id' => $request->brand,
-			'model' => $request->model,
-			'price' => $request->price,
-			'type' => CarType::fromValue($request->type),
-			'usage' => $request->usage,
-		]);
-
-		return redirect()->route('admin.cars');
-	}
-
-	public function destroy(Car $car)
-	{
-		$car->delete();
-		return redirect()->route('admin.cars');
+		return $this->index($query, $request->input());
 	}
 }

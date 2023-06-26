@@ -10,7 +10,7 @@ use BenSampo\Enum\Enum;
  * @method static static Diesel()
  * @method static static Hybrid()
  */
-final class CarType extends Enum
+final class CarFuel extends Enum
 {
 	const Electric = 'electric';
 	const Gas = 'gas';

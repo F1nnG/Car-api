@@ -3,7 +3,10 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Enums\CarType;
+use App\Enums\CarFuel;
+use App\Enums\CarBody;
+use App\Enums\CarTransmission;
+use App\Enums\CarDoors;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Car>
@@ -19,9 +22,15 @@ class CarFactory extends Factory
 	{
 		return [
 			'model' => $this->faker->word(),
+			'body' => CarBody::getRandomValue(),
+			'fuel' => CarFuel::getRandomValue(),
+			'construction_year' => $this->faker->numberBetween(1990, 2020),
 			'price' => $this->faker->numberBetween(10000, 100000),
-			'type' => CarType::getRandomValue(),
-			'usage' => $this->faker->numberBetween(0, 100000),
+			'hp' => $this->faker->numberBetween(50, 800),
+			'kw' => $this->faker->numberBetween(50, 800),
+			'transmission' => CarTransmission::getRandomValue(),
+			'doors' => CarDoors::getRandomValue(),
+			'seats' => $this->faker->numberBetween(1, 12),
 		];
 	}
 }

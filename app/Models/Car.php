@@ -5,21 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Traits\CarTypeTrait;
+use App\Traits\CarFuelTrait;
+use App\Traits\CarBodyTrait;
+use App\Traits\CarTransmissionTrait;
 use App\Traits\Price;
 use App\Traits\Usage;
 use App\Models\Brand;
 
 class Car extends Model
 {
-	use HasFactory, CarTypeTrait, Price, Usage;
+	use HasFactory, CarFuelTrait, CarBodyTrait, CarTransmissionTrait, Price, Usage;
 
 	protected $fillable = [
 		'brand_id',
 		'model',
 		'price',
-		'type',
-		'usage',
+		'construction_year',
+		'fuel',
+		'body',
+		'transmission',
+		'doors',
+		'seats',
 	];
 
 	protected $hidden = [

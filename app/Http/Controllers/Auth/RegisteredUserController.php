@@ -34,6 +34,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'profile_picture' => ['required', 'image'],
         ]);
 
         $user = User::create([
@@ -41,6 +42,13 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $extension = $request->file('profile_picture')->getClientOriginalExtension();
+        $filename = 'user_' . $user->id . '.' . $extension;
+        $path = $request->file('profile_picture')->storeAs('profile_pictures', $filename, 'public');
+
+        $user->profile_picture = $path;
+        $user->save();
 
         event(new Registered($user));
 

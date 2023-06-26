@@ -1,7 +1,5 @@
 @props(['disabled' => false])
 
-{{-- <input {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge(['class' => 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm']) !!}> --}}
-
 <div class="relative mb-6">
 	<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 		{{ $slot }}

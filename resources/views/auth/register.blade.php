@@ -1,7 +1,7 @@
 @extends('layouts.auth.guest')
 
 @section('content')
-	<form method="POST" action="{{ route('register') }}">
+	<form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
 		@csrf
 
 		<!-- Name -->
@@ -46,6 +46,13 @@
 			</x-auth.text-input>
 
 			<x-auth.input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+		</div>
+
+		<!-- Profile Picture -->
+		<div class="mt-4">
+			<x-auth.input-label for="profile_picture" :value="__('Profile Picture')" />
+
+			<input required name="profile_picture" class="cursor-pointer file:cursor-pointer text-gray-400 text-sm rounded-lg w-full bg-gray-700 border border-gray-600 file:py-2.5 file:px-2.5 file:text-white file:border-none file:bg-gray-600 hover:file:bg-gray-500" id="file_input" type="file">
 		</div>
 
 		<div class="flex items-center justify-end mt-4">

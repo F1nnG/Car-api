@@ -7,7 +7,7 @@ use App\Http\Services\SearchService;
 
 use App\Models\Brand;
 
-class BrandController extends Controller
+class AdminBrandController extends Controller
 {
 	private $SearchService;
 
