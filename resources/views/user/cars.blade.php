@@ -1,7 +1,7 @@
 @extends('layouts.user.user')
 
 @section('content')
-	<form action="{{ route('cars.search') }}" method="POST" class="w-full">
+	<form action="{{ route('cars.index') . '?' . http_build_query(request()->except('page')) }}" method="GET" class="w-full">
 		<div class="mb-16 flex items-start">
 			<!-- Sidebar -->
 			<div class="bg-gray-800 border border-gray-700 rounded-lg h-fit w-1/6 p-4 m-4">
@@ -139,11 +139,9 @@
 				</div>
 
 				<!-- Clear Filters -->
-				@if (url()->current() != route('cars.index'))
-					<div class="w-full text-center mt-2">
-						<a href="{{ route('cars.index') }}" class="text-center text-sm font-normal text-gray-400 hover:text-gray-300 cursor-pointer">Clear Filters</a>
-					</div>
-				@endif
+				<div class="w-full text-center mt-2">
+					<a href="{{ route('cars.index') }}" class="text-center text-sm font-normal text-gray-400 hover:text-gray-300 cursor-pointer">Clear Filters</a>
+				</div>
 			</div>
 
 			<!-- Cars -->
@@ -170,6 +168,8 @@
 						<p class="ml-16 text-2xl font-medium text-gray-400">No Cars Found</p>
 					</div>
 				@endforelse
+
+				{{ $cars->onEachSide(3)->links('components.user.pagination') }}
 			</div>
 
 			<div class="w-1/6 p-4 m-4">

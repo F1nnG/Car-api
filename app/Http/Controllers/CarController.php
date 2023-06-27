@@ -14,20 +14,21 @@ use App\Enums\CarDoors;
 
 class CarController extends Controller
 {
-	public function index($query = null, $searchRequest = null)
+	public function index(Request $request)
 	{
 		$user = Auth::user() ?? null;
-		$query = $query ?? Car::query();
+		$query = $this->search($request);
+		$cars = $query->paginate(12)->appends($request->except('page'));
 
 		return view('user.cars', [
 			'user' => $user,
-			'cars' => $query->paginate(12),
+			'cars' => $cars,
 			'brands' => Brand::all(),
 			'bodies' => CarBody::asSelectArray(),
 			'fuels' => CarFuel::asSelectArray(),
 			'transmissions' => CarTransmission::asSelectArray(),
 			'doors' => array_merge(['All' => 'all'], CarDoors::asSelectArray()),
-			'searchRequest' => $searchRequest ?? [],
+			'searchRequest' => $request->input() ?? [],
 		]);
 	}
 
@@ -74,13 +75,13 @@ class CarController extends Controller
 			$query->where($request->input('power'), '<=', $request->input('power_to'));
 		if ($request->input('transmission'))
 			$query->where('transmission', $request->input('transmission'));
-		if ($request->input('doors') != 'all')
+		if ($request->input('doors') != 'all' && $request->input('doors') != null)
 			$query->where('doors', CarDoors::fromKey($request->input('doors')));
 		if ($request->input('seats_from'))
 			$query->where('seats', '>=', $request->input('seats_from'));
 		if ($request->input('seats_to'))
 			$query->where('seats', '<=', $request->input('seats_to'));
 
-		return $this->index($query, $request->input());
+		return $query;
 	}
 }
