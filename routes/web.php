@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
 	// Admin Routes
 	Route::middleware('admin')->group(function () {
 		Route::get('/admin', fn () => redirect()->route('admin.requests'))
-		->name('admin');
+			->name('admin');
 
 		Route::get('/admin/requests', [RequestController::class, 'index'])
 			->name('admin.requests');

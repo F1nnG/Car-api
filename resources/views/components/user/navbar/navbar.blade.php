@@ -7,6 +7,8 @@
 		<!-- Navigation Menu -->
 		<ul class="flex">
 			<x-user.navbar.link href="{{ route('home') }}" text="Home" />
+			<x-user.navbar.link href="{{ route('cars.index') }}" text="Cars" allowed="{{ auth()->user() }}" />
+			<x-user.navbar.link href="{{ route('admin') }}" text="Admin Dashboard" allowed="{{ auth()->user()->is_admin }}" />
 		</ul>
 
 		<!-- User Menu -->
