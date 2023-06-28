@@ -26,6 +26,7 @@ class Car extends Model
 		'transmission',
 		'doors',
 		'seats',
+		'description',
 	];
 
 	protected $hidden = [

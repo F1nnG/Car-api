@@ -32,6 +32,16 @@ class CarController extends Controller
 		]);
 	}
 
+	public function show(Car $car)
+	{
+		$user = Auth::user() ?? null;
+
+		return view('user.car', [
+			'user' => $user,
+			'car' => $car,
+		]);
+	}
+
 	public function search(Request $request)
 	{
 		$query = Car::query();

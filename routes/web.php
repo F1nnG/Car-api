@@ -28,9 +28,8 @@ Route::get('/', function () {
 
 Route::get('/cars', [CarController::class, 'index'])
 	->name('cars.index');
-
-Route::post('/cars/search', [CarController::class, 'search'])
-	->name('cars.search');
+Route::get('/cars/{car}', [CarController::class, 'show'])
+	->name('cars.show');
 
 Route::middleware('auth')->group(function () {
 	// Admin Routes

@@ -30,6 +30,7 @@ return new class extends Migration
 			$table->enum('transmission', CarTransmission::getValues());
 			$table->enum('doors', CarDoors::getValues());
 			$table->integer('seats');
+			$table->longText('description');
 			$table->timestamps();
 		});
 	}

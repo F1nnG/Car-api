@@ -31,6 +31,7 @@ class CarFactory extends Factory
 			'transmission' => CarTransmission::getRandomValue(),
 			'doors' => CarDoors::getRandomValue(),
 			'seats' => $this->faker->numberBetween(1, 12),
+			'description' => $this->faker->realText(600),
 		];
 	}
 }
