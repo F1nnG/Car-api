@@ -2,7 +2,7 @@
 <!-- User Menu -->
 <button type="button" class="w-32 flex justify-end mr-3 text-sm rounded-full md:mr-0" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
 	<span class="sr-only">Open user menu</span>
-	<img class="w-8 h-8 rounded-full" src="{{ $user->profile_picture ? url("storage/$user->profile_picture") : url('storage/source/dummy_pfp.png') }}" alt="profile picture">
+	<img class="w-10 h-10 rounded-full object-cover" src="{{ $user->profile_picture ? url("storage/$user->profile_picture") : url('storage/source/dummy_pfp.png') }}" alt="profile picture">
 </button>
 <!-- Dropdown menu -->
 <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">

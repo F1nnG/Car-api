@@ -31,6 +31,7 @@ return new class extends Migration
 			$table->enum('doors', CarDoors::getValues());
 			$table->integer('seats');
 			$table->longText('description');
+			$table->longText('image')->nullable();
 			$table->timestamps();
 		});
 	}

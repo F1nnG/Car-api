@@ -23,10 +23,13 @@ class Car extends Model
 		'construction_year',
 		'fuel',
 		'body',
+		'hp',
+		'kw',
 		'transmission',
 		'doors',
 		'seats',
 		'description',
+		'image',
 	];
 
 	protected $hidden = [

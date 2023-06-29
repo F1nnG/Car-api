@@ -1,6 +1,6 @@
 <!-- Main modal -->
 <div id="create-car-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
-	<div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+	<div class="relative p-4 w-full max-w-4xl h-full md:h-auto">
 		<!-- Modal content -->
 		<div class="relative p-4 rounded-lg shadow bg-gray-800 sm:p-5">
 			<!-- Modal header -->
@@ -14,17 +14,10 @@
 				</button>
 			</div>
 			<!-- Modal body -->
-			<form action="{{ route('admin.cars.store') }}" method="POST">
+			<form action="{{ route('admin.cars.store') }}" method="POST"  enctype="multipart/form-data">
 				@csrf
-				<div class="grid gap-4 mb-4 sm:grid-cols-2">
-					<div class="sm:col-span-2">
-						<label for="name" class="block mb-2 text-sm font-medium text-white">Model</label>
-						<input type="text" name="model" id="model" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Type model name" required>
-					</div>
-					<div>
-						<label for="price" class="block mb-2 text-sm font-medium text-white">Price</label>
-						<input type="number" name="price" id="price" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Car price" required>
-					</div>
+				<div class="grid gap-4 mb-4 sm:grid-cols-3">
+					<!-- Brand -->
 					<div>
 						<label for="brand" class="block mb-2 text-sm font-medium text-white">Brand</label>
 						<select name="brand" id="brand" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500">
@@ -33,17 +26,81 @@
 							@endforeach
 						</select>
 					</div>
+					<!-- Model -->
+					<div class="sm:col-span-2">
+						<label for="name" class="block mb-2 text-sm font-medium text-white">Model</label>
+						<input type="text" name="model" id="model" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Type model name" required>
+					</div>
+					<!-- Body -->
 					<div>
-						<label for="type" class="block mb-2 text-sm font-medium text-white">Type</label>
-						<select name="type" id="type" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500">
-							@foreach ($carTypes as $carType)
-								<option value="{{ $carType }}">{{ $carType }}</option>
+						<label for="body" class="block mb-2 text-sm font-medium text-white">Body</label>
+						<select name="body" id="body" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500">
+							@foreach ($bodies as $body)
+								<option value="{{ $body }}">{{ $body }}</option>
 							@endforeach
 						</select>
 					</div>
+					<!-- Fuel -->
 					<div>
-						<label for="usage" class="block mb-2 text-sm font-medium text-white">Usage</label>
-						<input type="number" name="usage" id="usage" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Car usage" required>
+						<label for="fuel" class="block mb-2 text-sm font-medium text-white">Fuel</label>
+						<select name="fuel" id="fuel" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500">
+							@foreach ($fuels as $fuel)
+								<option value="{{ $fuel }}">{{ $fuel }}</option>
+							@endforeach
+						</select>
+					</div>
+					<!-- Construction Year -->
+					<div>
+						<label for="construction_year" class="block mb-2 text-sm font-medium text-white">Construction Year</label>
+						<input type="number" name="construction_year" id="construction_year" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Construction Year" required>
+					</div>
+					<!-- Transmission -->
+					<div>
+						<label for="transmission" class="block mb-2 text-sm font-medium text-white">Transmission</label>
+						<select name="transmission" id="transmission" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500">
+							@foreach ($transmissions as $transmission)
+								<option value="{{ $transmission }}">{{ $transmission }}</option>
+							@endforeach
+						</select>
+					</div>
+					<!-- Horsepower -->
+					<div>
+						<label for="horsepower" class="block mb-2 text-sm font-medium text-white">Horsepower</label>
+						<input type="number" name="horsepower" id="horsepower" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Horsepower" required>
+					</div>
+					<!-- Torque -->
+					<div>
+						<label for="torque" class="block mb-2 text-sm font-medium text-white">Torque</label>
+						<input type="number" name="torque" id="torque" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Torque" required>
+					</div>
+					<!-- Price -->
+					<div>
+						<label for="price" class="block mb-2 text-sm font-medium text-white">Price</label>
+						<input type="number" name="price" id="price" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Car price" required>
+					</div>
+					<!-- Doors -->
+					<div>
+						<label for="doors" class="block mb-2 text-sm font-medium text-white">Doors</label>
+						<select name="doors" id="doors" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500">
+							@foreach ($doors as $door)
+								<option value="{{ $door }}">{{ $door }}</option>
+							@endforeach
+						</select>
+					</div>
+					<!-- Seats -->
+					<div>
+						<label for="seats" class="block mb-2 text-sm font-medium text-white">Seats</label>
+						<input type="number" name="seats" id="seats" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Seats" required>
+					</div>
+					<!-- Description -->
+					<div class="sm:col-span-3">
+						<label for="description" class="block mb-2 text-sm font-medium text-white">Description</label>
+						<textarea name="description" id="description" cols="30" rows="5" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Description" required></textarea>
+					</div>
+					<!-- Image -->
+					<div class="sm:col-span-3">
+						<label for="car_image" class="block mb-2 text-sm font-medium text-white">Image</label>
+						<input name="car_image" id="file_input" type="file" class="cursor-pointer file:cursor-pointer text-gray-400 text-sm rounded-lg w-full bg-gray-700 border border-gray-600 file:py-2.5 file:px-2.5 file:text-white file:border-none file:bg-gray-600 hover:file:bg-gray-500" required>
 					</div>
 				</div>
 				<div class="flex justify-end mt-8">

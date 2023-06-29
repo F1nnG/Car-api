@@ -96,7 +96,7 @@
 	@if ($editCar)
 		<x-admin.edit-car-modal :brands="$brands" :carTypes="$carTypes" :car="$editCar" />
 	@else
-		<x-admin.create-car-modal :brands="$brands" :carTypes="$carTypes" />
+		<x-admin.create-car-modal :brands="$brands" :bodies="$bodies" :fuels="$fuels" :transmissions="$transmissions" :doors="$doors" />
 	@endif
 
 @endsection

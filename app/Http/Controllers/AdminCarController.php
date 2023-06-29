@@ -7,7 +7,12 @@ use App\Http\Services\SearchService;
 
 use App\Models\Car;
 use App\Models\Brand;
+
+// Enums
+use App\Enums\CarBody;
 use App\Enums\CarFuel;
+use App\Enums\CarTransmission;
+use App\Enums\CarDoors;
 
 class AdminCarController extends Controller
 {
@@ -30,21 +35,45 @@ class AdminCarController extends Controller
 
 		return view('admin.cars', [
 			'cars' => $cars,
-			'brands' => Brand::orderBy('name')->get(),
-			'carTypes' => CarFuel::getValues(),
 			'editCar' => $editCar ?? null,
+			'brands' => Brand::orderBy('name')->get(),
+			'bodies' => CarBody::getValues(),
+			'fuels' => CarFuel::getValues(),
+			'transmissions' => CarTransmission::getValues(),
+			'doors' => CarDoors::getValues(),
 		]);
 	}
 
 	public function store(Request $request)
 	{
-		Car::create([
+		// dd($request);
+
+		$request->validate([
+			'car_image' => ['required', 'image'],
+		]);
+
+		$car = Car::create([
 			'brand_id' => $request->brand,
 			'model' => $request->model,
+			'body' => CarBody::fromValue($request->body),
+			'fuel' => CarFuel::fromValue($request->fuel),
+			'construction_year' => $request->construction_year,
 			'price' => $request->price,
-			'type' => CarFuel::fromValue($request->type),
-			'usage' => $request->usage,
+			'hp' => $request->horsepower,
+			'kw' => $request->torque,
+			'transmission' => CarTransmission::fromValue($request->transmission),
+			'doors' => CarDoors::fromValue($request->doors),
+			'seats' => $request->seats,
+			'description' => $request->description,
 		]);
+
+		
+		$extension = $request->file('car_image')->getClientOriginalExtension();
+		$filename = 'car_' . $car->id . '.' . $extension;
+		$path = $request->file('car_image')->storeAs('car_images', $filename, 'public');
+
+		$car->image = $path;
+		$car->save();
 
 		return redirect()->route('admin.cars');
 	}
