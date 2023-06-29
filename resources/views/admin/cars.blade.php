@@ -4,7 +4,7 @@
 
 	<div class="bg-gray-900 bg-opacity-80 fixed inset-0 z-40" style="display: none;"></div>
 
-	<h1 class="w-full text-center text-8xl font-bold text-gray-800 pt-14">Cars</h1>
+	<h1 class="w-full text-center text-8xl font-bold text-gray-800 pt-8">Cars</h1>
 
 	<div class="pt-16 mx-auto max-w-screen-xl px-4 lg:px-12">
 		<div class="bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">

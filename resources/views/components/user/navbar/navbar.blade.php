@@ -5,10 +5,13 @@
 		<x-user.navbar.logo />
 
 		<!-- Navigation Menu -->
-		<ul class="flex">
+		<ul class="flex items-center">
 			<x-user.navbar.link href="{{ route('home') }}" text="Home" />
 			<x-user.navbar.link href="{{ route('cars.index') }}" text="Cars" allowed="{{ auth()->user() }}" />
-			<x-user.navbar.link href="{{ route('admin') }}" text="Admin Dashboard" allowed="{{ auth()->user()->is_admin }}" />
+			@if (auth()->user()->is_admin) <hr class=" mx-4 bg-gray-700 h-8 w-0.5 border-0"> @endif
+			<x-user.navbar.link href="{{ route('admin.requests') }}" text="Requests" allowed="{{ auth()->user()->is_admin }}" />
+			<x-user.navbar.link href="{{ route('admin.cars') }}" text="Cars" allowed="{{ auth()->user()->is_admin }}" />
+			<x-user.navbar.link href="{{ route('admin.brands') }}" text="Brands" allowed="{{ auth()->user()->is_admin }}" />
 		</ul>
 
 		<!-- User Menu -->

@@ -6,7 +6,9 @@
 			<h1 class="text-white text-4xl font-semibold col-span-3 p-8 pb-4">{{$car->brand->name}} {{ $car->model }}</h1>
 
 			<div class="col-span-2 p-8 pt-0">
-				<img src="{{ url('storage/source/dummy_image.png') }}" alt="car_picture" class="rounded-md w-full aspect-[16/9]">
+				<a href="{{ url("storage/$car->image") }}">
+					<img src="{{ url("storage/$car->image") }}" alt="car_picture" class="rounded-md w-full aspect-[16/9] cursor-pointer">
+				</a>
 				<p class="mt-4 text-base text-gray-400">{{ $car->description }}</p>
 			</div>
 

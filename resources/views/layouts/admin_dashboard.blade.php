@@ -11,12 +11,16 @@
 	@vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 	<body>
-		<div class="min-h-screen dark:bg-gray-200">
+		<div class="min-h-screen bg-white">
 			{{-- Navbar --}}
-			<x-admin.navbar />
+			@if (auth()->user())
+				<x-user.navbar.navbar :user="auth()->user()" />
+			@else
+				<x-user.navbar.navbar />
+			@endif
 
 			{{-- Page Content --}}
-			<main class="pl-64 w-full">
+			<main class="w-full">
 				@yield('content')
 			</main>
 		</div>

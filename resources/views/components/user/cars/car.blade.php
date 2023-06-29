@@ -1,6 +1,6 @@
 @props(['car'])
 <div class="my-4 mx-4 border rounded-lg shadow bg-gray-800 border-gray-700">
-	<a href="{{ url('storage/source/dummy_image.png') }}">
+	<a href="{{ url("storage/$car->image") }}">
 		<img class="rounded-t-lg w-full aspect-video object-cover" src="{{ url("storage/$car->image") }}" alt="Car Image" />
 	</a>
 	<div class="p-5">
