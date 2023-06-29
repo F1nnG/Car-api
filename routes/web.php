@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\CarController;
@@ -22,9 +23,7 @@ use Illuminate\Http\Request;
 */
 
 // Guest Routes
-Route::get('/', function () {
-	return view('welcome');
-})->name('home');
+Route::get('/', [GuestController::class, 'welcome'])->name('home');
 
 Route::get('/cars', [CarController::class, 'index'])
 	->name('cars.index');
