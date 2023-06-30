@@ -44,5 +44,5 @@
 		</div>
 	</div>
 
-	<x-admin.edit-car-modal :car="$car" :brands="$brands" :bodies="$bodies" :fuels="$fuels" :transmissions="$transmissions" :doors="$doors" />
+	<x-admin.edit-car-modal :car="$car" :brands="$brands" :bodies="$enums['bodies']" :fuels="$enums['fuels']" :transmissions="$enums['transmissions']" :doors="$enums['doors']" />
 @endsection

@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Services\SearchService;
 
-use App\Models\UserRequest;
-
 class RequestController extends Controller
 {
 	private $SearchService;

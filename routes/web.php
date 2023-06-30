@@ -7,9 +7,7 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\CarController;
-use App\Http\Controllers\AdminCarController;
-use App\Http\Controllers\AdminBrandController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,35 +23,36 @@ use Illuminate\Http\Request;
 // Guest Routes
 Route::get('/', [GuestController::class, 'welcome'])->name('home');
 
-Route::get('/cars', [CarController::class, 'index'])
-	->name('cars.index');
-Route::get('/cars/{car}', [CarController::class, 'show'])
-	->name('cars.show');
-
 Route::middleware('auth')->group(function () {
+	// User Routes
+	Route::get('/cars', [CarController::class, 'index'])
+		->name('cars.index');
+	Route::get('/cars/{car}', [CarController::class, 'show'])
+		->name('cars.show');
+
 	// Admin Routes
 	Route::middleware('admin')->group(function () {
-		Route::get('/admin', fn () => redirect()->route('admin.requests'))
+		Route::get('/admin', fn () => redirect()->route('requests.index'))
 			->name('admin');
 
-		Route::get('/admin/requests', [RequestController::class, 'index'])
-			->name('admin.requests');
+		Route::get('/requests', [RequestController::class, 'index'])
+			->name('requests.index');
 
-		Route::post('/cars', [AdminCarController::class, 'store'])
+		Route::post('/cars', [CarController::class, 'store'])
 			->name('cars.store');
-		Route::put('/cars/{car}', [AdminCarController::class, 'update'])
+		Route::put('/cars/{car}', [CarController::class, 'update'])
 			->name('cars.update');
-		Route::delete('/cars/{car}', [AdminCarController::class, 'destroy'])
+		Route::delete('/cars/{car}', [CarController::class, 'destroy'])
 			->name('cars.destroy');
 
-		Route::get('/admin/brands', [AdminBrandController::class, 'index'])
-			->name('admin.brands');
-		Route::post('/admin/brands', [AdminBrandController::class, 'store'])
-			->name('admin.brands.store');
-		Route::put('/admin/brands/{brand}', [AdminBrandController::class, 'update'])
-			->name('admin.brands.update');
-		Route::delete('/admin/brands/{brand}', [AdminBrandController::class, 'destroy'])
-			->name('admin.brands.destroy');
+		Route::get('/brands', [BrandController::class, 'index'])
+			->name('brands.index');
+		Route::post('/brands', [BrandController::class, 'store'])
+			->name('brands.store');
+		Route::put('/brands/{brand}', [BrandController::class, 'update'])
+			->name('brands.update');
+		Route::delete('/brands/{brand}', [BrandController::class, 'destroy'])
+			->name('brands.destroy');
 	});
 });
 

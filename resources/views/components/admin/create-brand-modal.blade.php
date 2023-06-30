@@ -14,7 +14,7 @@
 				</button>
 			</div>
 			<!-- Modal body -->
-			<form action="{{ route('admin.brands.store') }}" method="POST">
+			<form action="{{ route('brands.store') }}" method="POST">
 				@csrf
 				<div class="grid gap-4 mb-4 sm:grid-cols-2">
 					<div>

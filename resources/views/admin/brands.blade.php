@@ -18,7 +18,7 @@
 									<path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
 								</svg>
 							</div>
-							<form action="{{ route('admin.brands') }}" method="get">
+							<form action="{{ route('brands.index') }}" method="get">
 								<input type="text" id="search" name="search" class="border text-sm rounded-lg block w-full pl-10 p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Search" value="{{ request('search') }}">
 							</form>
 							</div>
@@ -66,11 +66,11 @@
 									<div id="action-dropdown-{{ $brand->id }}" class="hidden z-10 w-44 rounded divide-y shadow bg-gray-700 divide-gray-600">
 										<ul class="py-1 text-sm text-gray-200" aria-labelledby="action-dropdown-{{ $brand->id }}-button">
 											<li>
-												<a href="{{ route('admin.brands', ['edit' => $brand->id]) }}" class="block py-2 px-4 hover:bg-gray-600 hover:text-white">Edit</a>
+												<a href="{{ route('brands.index', ['edit' => $brand->id]) }}" class="block py-2 px-4 hover:bg-gray-600 hover:text-white">Edit</a>
 											</li>
 										</ul>
 										<div class="py-1">
-											<form action="{{ route('admin.brands.destroy', ['brand' => $brand->id]) }}" method="POST">
+											<form action="{{ route('brands.destroy', ['brand' => $brand->id]) }}" method="POST">
 												@method('DELETE')
 												@csrf
 

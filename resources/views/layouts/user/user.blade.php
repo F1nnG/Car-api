@@ -16,11 +16,7 @@
 		<div class="bg-gray-900 bg-opacity-50 fixed inset-0 z-40" style="display: none;"></div>
 
 		<!-- Navbar -->
-		@if (isset($user))
-			<x-user.navbar.navbar :user="$user" />
-		@else
-			<x-user.navbar.navbar />
-		@endif
+		<x-user.navbar.navbar />
 
 		<!-- Content -->
 		@yield('content')

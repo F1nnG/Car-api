@@ -23,7 +23,7 @@
 					<label for="body" class="block mt-4 mb-2 text-sm font-medium text-white">Body</label>
 					<select name="body" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
 						<option selected value="">all</option>
-						@foreach ($bodies as $key => $body)
+						@foreach ($enums['bodies'] as $key => $body)
 							<option @if (isset($searchRequest['body']) && $searchRequest['body'] == $key) selected @endif value="{{ $key }}">{{ $body }}</option>
 						@endforeach
 					</select>
@@ -33,7 +33,7 @@
 					<label for="fuel" class="block mt-4 mb-2 text-sm font-medium text-white">Fuel</label>
 					<select name="fuel" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
 						<option selected value="">all</option>
-						@foreach ($fuels as $key => $fuel)
+						@foreach ($enums['fuels'] as $key => $fuel)
 							<option @if (isset($searchRequest['fuel']) && $searchRequest['fuel'] == $key) selected @endif value="{{ $key }}">{{ $fuel }}</option>
 						@endforeach
 					</select>
@@ -88,7 +88,7 @@
 					<label for="transmission" class="block mt-4 mb-2 text-sm font-medium text-white">Transmission</label>
 					<select name="transmission" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
 						<option selected value="">all</option>
-						@foreach ($transmissions as $key => $transmission)
+						@foreach ($enums['transmissions'] as $key => $transmission)
 							<option @if (isset($searchRequest['transmission']) && $searchRequest['transmission'] == $key) selected @endif value="{{ $key }}">{{ $transmission }}</option>
 						@endforeach
 					</select>
@@ -96,11 +96,19 @@
 					<!-- Number of Doors -->
 					<label for="number_of_doors" class="block mt-4 mb-2 text-sm font-medium text-white">Number of Doors</label>
 					<div class="w-full flex">
-						@foreach ($doors as $key => $door)
+						<div class="w-1/4">
+							<input checked type="radio" name="doors" id="all" value="all" class="hidden peer">
+							<label for="all" class="w-full bg-gray-700 hover:bg-gray-600 peer-checked:bg-blue-500">
+								<div class="w-full text-sm h-12 border border-gray-600 border-r-0 rounded-l-lg bg-inherit flex justify-center items-center text-white cursor-pointer transition-all ease-in duration-100">
+									<p>All</p>
+								</div>
+							</label>
+						</div>
+						@foreach ($enums['doors'] as $key => $door)
 							<div class="w-1/4">
-								<input @if (($loop->first) || (isset($searchRequest['doors']) && $searchRequest['doors'] == $door)) checked @endif type="radio" name="doors" id="{{ $door }}" value="{{ $door }}" class="hidden peer">
+								<input @if (isset($searchRequest['doors']) && $searchRequest['doors'] == $door) checked @endif type="radio" name="doors" id="{{ $door }}" value="{{ $door }}" class="hidden peer">
 								<label for="{{ $door }}" class="w-full bg-gray-700 hover:bg-gray-600 peer-checked:bg-blue-500">
-									<div class="w-full text-sm h-12 border border-gray-600 @if (!$loop->last) border-r-0 @endif @if ($loop->first) rounded-l-lg @endif @if ($loop->last) rounded-r-lg @endif bg-inherit flex justify-center items-center text-white cursor-pointer transition-all ease-in duration-100">
+									<div class="w-full text-sm h-12 border border-gray-600 @if ($loop->last) rounded-r-lg @endif bg-inherit flex justify-center items-center text-white cursor-pointer transition-all ease-in duration-100">
 										<p>{{ $key }}</p>
 									</div>
 								</label>
@@ -184,5 +192,5 @@
 		</div>
 	</form>
 
-	<x-admin.create-car-modal :brands="$brands" :bodies="$bodies" :fuels="$fuels" :transmissions="$transmissions" :doors="$doors" />
+	<x-admin.create-car-modal :brands="$brands" :bodies="$enums['bodies']" :fuels="$enums['fuels']" :transmissions="$enums['transmissions']" :doors="$enums['doors']" />
 @endsection
