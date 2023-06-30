@@ -14,7 +14,7 @@
 				</button>
 			</div>
 			<!-- Modal body -->
-			<form action="{{ route('admin.cars.store') }}" method="POST"  enctype="multipart/form-data">
+			<form action="{{ route('cars.store') }}" method="POST" enctype="multipart/form-data">
 				@csrf
 				<div class="grid gap-4 mb-4 sm:grid-cols-3">
 					<!-- Brand -->
@@ -36,7 +36,7 @@
 						<label for="body" class="block mb-2 text-sm font-medium text-white">Body</label>
 						<select name="body" id="body" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500">
 							@foreach ($bodies as $body)
-								<option value="{{ $body }}">{{ $body }}</option>
+								<option value="{{ lcfirst($body) }}">{{ $body }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -45,7 +45,7 @@
 						<label for="fuel" class="block mb-2 text-sm font-medium text-white">Fuel</label>
 						<select name="fuel" id="fuel" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500">
 							@foreach ($fuels as $fuel)
-								<option value="{{ $fuel }}">{{ $fuel }}</option>
+								<option value="{{ lcfirst($fuel) }}">{{ $fuel }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -59,7 +59,7 @@
 						<label for="transmission" class="block mb-2 text-sm font-medium text-white">Transmission</label>
 						<select name="transmission" id="transmission" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500">
 							@foreach ($transmissions as $transmission)
-								<option value="{{ $transmission }}">{{ $transmission }}</option>
+								<option value="{{ lcfirst($transmission) }}">{{ $transmission }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -82,8 +82,8 @@
 					<div>
 						<label for="doors" class="block mb-2 text-sm font-medium text-white">Doors</label>
 						<select name="doors" id="doors" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500">
-							@foreach ($doors as $door)
-								<option value="{{ $door }}">{{ $door }}</option>
+							@foreach ($doors as $door => $i)
+								@if ($door != 'All') <option value="{{ $door }}">{{ $door }}</option> @endif
 							@endforeach
 						</select>
 					</div>

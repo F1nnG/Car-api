@@ -39,14 +39,12 @@ Route::middleware('auth')->group(function () {
 		Route::get('/admin/requests', [RequestController::class, 'index'])
 			->name('admin.requests');
 
-		Route::get('/admin/cars', [AdminCarController::class, 'index'])
-			->name('admin.cars');
-		Route::post('/admin/cars', [AdminCarController::class, 'store'])
-			->name('admin.cars.store');
-		Route::put('/admin/cars/{car}', [AdminCarController::class, 'update'])
-			->name('admin.cars.update');
-		Route::delete('/admin/cars/{car}', [AdminCarController::class, 'destroy'])
-			->name('admin.cars.destroy');
+		Route::post('/cars', [AdminCarController::class, 'store'])
+			->name('cars.store');
+		Route::put('/cars/{car}', [AdminCarController::class, 'update'])
+			->name('cars.update');
+		Route::delete('/cars/{car}', [AdminCarController::class, 'destroy'])
+			->name('cars.destroy');
 
 		Route::get('/admin/brands', [AdminBrandController::class, 'index'])
 			->name('admin.brands');

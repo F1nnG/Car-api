@@ -160,6 +160,14 @@
 						<span class="sr-only">Search</span>
 					</button>
 				</div>
+				<!-- New Car -->
+				@if (auth()->user()->is_admin)
+					<div class="col-span-3 mx-4 flex justify-center">
+						<button type="button" data-modal-toggle="create-car-modal" class="w-full mt-4 text-sm font-medium bg-transparent text-blue-500 border-2 border-blue-500 rounded transition-all ease-in duration-75 hover:bg-blue-500 hover:text-white">
+							<p class="px-6 py-2">&plus; New Car</p>
+						</button>
+					</div>
+				@endif
 				<!-- Cars -->
 				@forelse ($cars as $car)
 					<x-user.cars.car :car="$car" />
@@ -175,4 +183,6 @@
 			<div class="w-1/6 p-4 m-4">
 		</div>
 	</form>
+
+	<x-admin.create-car-modal :brands="$brands" :bodies="$bodies" :fuels="$fuels" :transmissions="$transmissions" :doors="$doors" />
 @endsection

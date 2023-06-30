@@ -39,6 +39,11 @@ class CarController extends Controller
 		return view('user.car', [
 			'user' => $user,
 			'car' => $car,
+			'brands' => Brand::all(),
+			'bodies' => CarBody::asSelectArray(),
+			'fuels' => CarFuel::asSelectArray(),
+			'transmissions' => CarTransmission::asSelectArray(),
+			'doors' => CarDoors::asSelectArray(),
 		]);
 	}
 

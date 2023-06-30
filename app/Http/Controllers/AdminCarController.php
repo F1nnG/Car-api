@@ -46,8 +46,6 @@ class AdminCarController extends Controller
 
 	public function store(Request $request)
 	{
-		// dd($request);
-
 		$request->validate([
 			'car_image' => ['required', 'image'],
 		]);
@@ -75,7 +73,7 @@ class AdminCarController extends Controller
 		$car->image = $path;
 		$car->save();
 
-		return redirect()->route('admin.cars');
+		return redirect()->route('cars.index');
 	}
 
 	public function update(Request $request, Car $car)
@@ -83,17 +81,33 @@ class AdminCarController extends Controller
 		$car->update([
 			'brand_id' => $request->brand,
 			'model' => $request->model,
+			'body' => CarBody::fromValue($request->body),
+			'fuel' => CarFuel::fromValue($request->fuel),
+			'construction_year' => $request->construction_year,
 			'price' => $request->price,
-			'type' => CarFuel::fromValue($request->type),
-			'usage' => $request->usage,
+			'hp' => $request->horsepower,
+			'kw' => $request->torque,
+			'transmission' => CarTransmission::fromValue($request->transmission),
+			'doors' => CarDoors::fromValue($request->doors),
+			'seats' => $request->seats,
+			'description' => $request->description,
 		]);
 
-		return redirect()->route('admin.cars');
+		if ($request->hasFile('car_image')) {
+			$extension = $request->file('car_image')->getClientOriginalExtension();
+			$filename = 'car_' . $car->id . '.' . $extension;
+			$path = $request->file('car_image')->storeAs('car_images', $filename, 'public');
+
+			$car->image = $path;
+			$car->save();
+		}
+
+		return redirect()->route('cars.show', ['car' => $car->id]);
 	}
 
 	public function destroy(Car $car)
 	{
 		$car->delete();
-		return redirect()->route('admin.cars');
+		return redirect()->route('cars.index');
 	}
 }
