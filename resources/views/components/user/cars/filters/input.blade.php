@@ -1,0 +1,2 @@
+@props(['name', 'type', 'placeholder', 'width', 'searchRequest'])
+<input @if (isset($searchRequest[$name])) value="{{ $searchRequest[$name] }}" @endif type="{{ $type }}" name=" {{ $name }}" placeholder="{{ $placeholder }}" class="{{ $width }} bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 placeholder-gray-400">

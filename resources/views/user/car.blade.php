@@ -5,22 +5,7 @@
 		<div class="content-center grid grid-cols-3 max-w-screen-xl w-full mt-4 rounded-lg bg-gray-800">
 			<div class="flex items-center col-span-3 p-8 pb-4 text-white">
 				<h1 class="text-4xl font-semibold">{{ ucfirst($car->brand->name) }} {{ ucfirst($car->model) }}</h1>
-				@if (auth()->user()->is_admin)
-					<div class="flex text-2xl select-none mt-1">
-						<!-- Edit Car -->
-						<button data-modal-toggle="edit-car-modal" type="button">
-							<i class="fa-solid fa-pen-to-square ml-8 hover:text-blue-500 cursor-pointer"></i>
-						</button>
-						<!-- Delete Car -->
-						<form action="{{ route('cars.destroy', ['car' => $car->id]) }}" method="POST">
-							@csrf
-							@method('DELETE')
-							<button type="submit">
-								<i class="fa-solid fa-trash ml-4 hover:text-red-500 cursor-pointer"></i>
-							</button>
-						</form>
-					</div>
-				@endif
+				<x-user.car.admin-buttons :carId="$car->id" />
 			</div>
 
 			<div class="col-span-2 p-8 pt-0">
