@@ -21,10 +21,18 @@ use App\Http\Controllers\BrandController;
 */
 
 // Guest Routes
-Route::get('/', [GuestController::class, 'welcome'])->name('home');
+Route::get('/', [GuestController::class, 'welcome'])
+	->name('home');
 
 Route::middleware('auth')->group(function () {
 	// User Routes
+	Route::get('/profile', [ProfileController::class, 'edit'])
+		->name('profile.edit');
+	Route::patch('/profile', [ProfileController::class, 'update'])
+		->name('profile.update');
+	Route::delete('/profile', [ProfileController::class, 'destroy'])
+		->name('profile.destroy');
+
 	Route::get('/cars', [CarController::class, 'index'])
 		->name('cars.index');
 	Route::get('/cars/{car}', [CarController::class, 'show'])
@@ -54,16 +62,6 @@ Route::middleware('auth')->group(function () {
 		Route::delete('/brands/{brand}', [BrandController::class, 'destroy'])
 			->name('brands.destroy');
 	});
-});
-
-Route::get('/dashboard', function () {
-	return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-	Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-	Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-	Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';

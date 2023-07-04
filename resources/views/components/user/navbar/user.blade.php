@@ -12,6 +12,9 @@
 	</div>
 	<ul class="py-2" aria-labelledby="user-menu-button">
 		<li>
+			<a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm cursor-pointer hover:bg-gray-600 text-white dark:text-gray-200">Profile</a>
+		</li>
+		<li>
 			<a onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-sm cursor-pointer hover:bg-gray-600 text-white dark:text-gray-200">Log out</a>
 		</li>
 	</ul>
